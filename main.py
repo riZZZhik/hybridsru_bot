@@ -1,10 +1,27 @@
+# Import base modules
 from loguru import logger
 from yaml import safe_load
 
+# Import aiogram
+from aiogram import Bot, Dispatcher, executor
+
+# Import bot
+from HybridsRu_bot import setup_bot
+
 if __name__ == "__main__":
-    # Download bot config from file
+    # Load bot config from file
     with open("config.yaml") as f:
         config = safe_load(f)
-
     logger.info(f"Loaded config from file: {config}")
 
+    # Initialize bot
+    bot = Bot(token=config["api_key"])
+    dp = Dispatcher(bot)
+    logger.info(f"Created bot with {config['api_key']} api")
+
+    # Setup functions
+    handlers_names = setup_bot(dp)
+    logger.info(f"Created bot handlers: {handlers_names}")
+
+    # Run bot
+    executor.start_polling(dp)
