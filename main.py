@@ -16,12 +16,14 @@ if __name__ == "__main__":
 
     # Initialize bot
     bot = Bot(token=config["api_key"])
+    bot["save_dir"] = config["save_dir"]
     dp = Dispatcher(bot)
-    logger.info(f"Created bot with {config['api_key']} api")
+    logger.info(f"Created bot with {config['api_key']} api_key")
 
     # Setup functions
     handlers_names = setup_bot(dp)
     logger.info(f"Created bot handlers: {handlers_names}")
 
     # Run bot
+    logger.info("Let's go")
     executor.start_polling(dp)
