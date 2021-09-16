@@ -14,5 +14,5 @@ async def save_image(message: types.Message):
         os.makedirs(save_dir)
 
     # Save image
-    save_path = os.path.join(save_dir, dt.strftime("%H:%M:%S-%f.jpg"))
+    save_path = os.path.join(save_dir, dt.strftime("%H-%M-%S-%f.jpg"))
     await message.photo[-1].download(save_path)
