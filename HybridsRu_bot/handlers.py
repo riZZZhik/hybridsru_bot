@@ -1,5 +1,4 @@
 import os
-from datetime import datetime
 from uuid import uuid4
 
 from aiogram import types
@@ -8,7 +7,7 @@ from loguru import logger
 
 async def save_image(message: types.Message):
     # Get current time
-    dt = datetime.now()
+    dt = message.date
 
     # Get path to save directory
     save_dir = os.path.join(message.bot.get("save_dir"), dt.strftime("%Y"), dt.strftime("%B"), dt.strftime("%d"))
@@ -16,8 +15,7 @@ async def save_image(message: types.Message):
         os.makedirs(save_dir)
 
     # Save image
-    uuid = str(uuid4()).split("-")[0]
-    save_path = os.path.join(save_dir, dt.strftime(f"%H-%M-%S-%f-{uuid}.jpg"))
+    save_path = os.path.join(save_dir, dt.strftime(f"%H часов %M минут ({str(uuid4())}).jpg"))
     await message.photo[-1].download(save_path)
 
     # Log event
